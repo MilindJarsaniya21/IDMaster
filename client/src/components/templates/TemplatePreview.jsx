@@ -1,33 +1,47 @@
-import { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect } from "react";
+import PropTypes from "prop-types";
 
-import Card from '../ui/Card';
+import Card from "../ui/Card";
 
 const updateSvgContent = (svgContent, userData) => {
   let updatedSvgContent = svgContent;
   updatedSvgContent = updatedSvgContent.replace(
     /{{name}}/g,
-    userData.name || ''
+    userData.name || ""
   );
   updatedSvgContent = updatedSvgContent.replace(
     /{{email}}/g,
-    userData.email || ''
+    userData.email || ""
   );
   updatedSvgContent = updatedSvgContent.replace(
     /{{phone}}/g,
-    userData.phone || ''
+    userData.phone || ""
   );
   updatedSvgContent = updatedSvgContent.replace(
     /{{address}}/g,
-    userData.address || ''
+    userData.address || ""
   );
+
+  // Split the URL by '/' to get the parts of the URL
+  let urlParts = userData.idImage.split("/");
+
+  // Find the index of 'upload' in the URL parts
+  let uploadIndex = urlParts.indexOf("upload");
+
+  // Insert 'a_180' after 'upload' in the URL parts
+  urlParts.splice(uploadIndex + 1, 0, "a_180");
+
+  // Join the URL parts back together to get the rotated image URL
+  let rotatedImageUrl = urlParts.join("/");
+
+  // Replace the {{idImage}} placeholder with the rotated image URL
   updatedSvgContent = updatedSvgContent.replace(
     /{{idImage}}/g,
-    userData.idImage || ''
+    rotatedImageUrl || ""
   );
+
   return updatedSvgContent;
 };
-
 function TemplatePreview({
   templates,
   selectedTemplate,

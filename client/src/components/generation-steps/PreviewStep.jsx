@@ -1,17 +1,17 @@
-import html2canvas from 'html2canvas';
-import PropTypes from 'prop-types';
-import React, { Suspense, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import html2canvas from "html2canvas";
+import PropTypes from "prop-types";
+import React, { Suspense, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
-import Button from '../ui/Button';
-import Loader from '../ui/Loader';
+import Button from "../ui/Button";
+import Loader from "../ui/Loader";
 
 const TemplatePreview = React.lazy(() =>
-  import('../templates/TemplatePreview')
+  import("../templates/TemplatePreview")
 );
 
 function PreviewStep(props) {
-  const [svgContent, setSvgContent] = useState('');
+  const [svgContent, setSvgContent] = useState("");
 
   const form = useSelector((state) => state.form);
   const { loading, createdForm } = form;
@@ -20,10 +20,10 @@ function PreviewStep(props) {
 
   const handleDownloadPDF = () => {
     html2canvas(svgRef.current, { useCORS: true }).then((canvas) => {
-      const pngImage = canvas.toDataURL('image/png');
-      const downloadLink = document.createElement('a');
+      const pngImage = canvas.toDataURL("image/png");
+      const downloadLink = document.createElement("a");
       downloadLink.href = pngImage;
-      downloadLink.download = 'image.png';
+      downloadLink.download = "image.png";
       downloadLink.click();
     });
   };
